@@ -14,6 +14,14 @@ exports.createValidator = [
     .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
     .matches(/\d/).withMessage('Password must contain at least one digit')
     .matches(/[^\w\s]/).withMessage('Password must contain at least one special character'),
+  body('passwordconf')
+    .exists().withMessage('Password confirmation is required')
+    .custom((value, { req }) => {
+      if (value !== req.body.password)
+        throw new Error('Passwords do not match');
+      else
+        return true;
+    }).withMessage('Passwords do not match'),
 
   // Sanitize all fields to prevent XSS attacks
   body('*').escape(),
