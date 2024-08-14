@@ -8,13 +8,13 @@ const { createNewUser, getUserByUsername, getMessages, postMessage } = require('
 const passport = require('../configs/passport.config');
 
 // DEFINE FUNCTION TO FETCH DATA FROM DB & CREATE NEW USER
-exports.signUpUser = asyncHandler(async (req, res) => {
+exports.signUpUser = asyncHandler(async (req, res, next) => {
   const { firstname, lastname, username, password } = req.body;
   const user = await getUserByUsername(username);
   if (user)
     return res.status(400).json({ errors: [{ msg: 'Username already exists' }] });
   await createNewUser(firstname, lastname, username, password);
-  res.json({ message: 'User created' });
+  next();
 });
 
 // DEFINE ROUTE TO AUTHENTICATE USER VIA PASSPORT STRATEGY

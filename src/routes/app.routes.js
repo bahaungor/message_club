@@ -14,7 +14,7 @@ const { createValidator } = require('../validators/user.create.validator');
 const { messageValidator } = require('../validators/message.submit.validator');
 
 // CREATE ROUTES TO CALL CERTAIN CONTROLLER FUNCTIONS ON CERTAIN REQUESTS
-router.post('/sign-up', createValidator, signUpUser);
+router.post('/sign-up', createValidator, signUpUser, logInUser);
 router.post('/log-in', logInUser);
 router.get('/isAuth', isAuthenticated);
 router.get('/log-out', logOutUser);
